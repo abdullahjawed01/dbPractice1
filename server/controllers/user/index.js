@@ -4,6 +4,7 @@ import userModel from "../../models/User/User.js";
 
 const router = express.Router()
 
+// findall
 router.get("/getalluser", async (req, res) => {
     try {
         let check = await userModel.find({});
@@ -14,6 +15,7 @@ router.get("/getalluser", async (req, res) => {
     }
 })
 
+// create collection
 router.post("/register", async (req, res) => {
     try {
         let userInput = req.body;
@@ -30,6 +32,8 @@ router.post("/register", async (req, res) => {
     }
 });
 
+
+// create collection 
 router.post("/createCollection", async (req, res) => {
     try {
         let check = await userModel.create({});
@@ -41,6 +45,7 @@ router.post("/createCollection", async (req, res) => {
     }
 })
 
+// create many
 router.post("/registermany", async (req, res) => {
     try {
         let userInput = req.body
@@ -53,6 +58,7 @@ router.post("/registermany", async (req, res) => {
     }
 })
 
+// findOne 
 router.get("/findone", async (req, res) => {
     try {
         let check = await userModel.findOne({ email: "abc@gmail.com" });
@@ -64,6 +70,7 @@ router.get("/findone", async (req, res) => {
     }
 })
 
+// Findoneand delete 
 router.delete("/findonedelete", async (req, res) => {
     try {
         let check = await userModel.findOneAndDelete({
@@ -77,6 +84,7 @@ router.delete("/findonedelete", async (req, res) => {
     }
 })
 
+// find one and replace 
 router.put("/findonereplace", async (req, res) => {
     try {
         let check = await userModel.findOneAndReplace(
@@ -101,6 +109,8 @@ router.put("/findonereplace", async (req, res) => {
     }
 })
 
+
+// find one and update
 router.put("/findoneupdate", async (req, res) => {
     try {
         let check = await userModel.findOneAndUpdate(
@@ -116,6 +126,24 @@ router.put("/findoneupdate", async (req, res) => {
     }
 })
 
+
+// updatet one 
+router.put("/updateone", async (req, res) => {
+    try {
+        let check = await userModel.updateOne(
+      { email: "abc12@gmail.com" },
+      { $set: { fullName: "Ali" } }
+       );
+        console.log(`check `);
+        res.status(200).json({ msg: check })
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ msg: error })
+    }
+})
+
+
+// update many 
 router.put("/updateMany", async (req, res) => {
     try {
          let check = await userModel.updateMany(
@@ -129,6 +157,52 @@ router.put("/updateMany", async (req, res) => {
         res.status(500).json({ msg: error })
     }
 })
+
+// delete one
+router.delete("/deleteOne", async (req, res) => {
+    try {
+        let check = await userModel.deleteOne({
+      fullName: "suhail",
+         });
+        console.log(`check `);
+        res.status(200).json({ msg: check })
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ msg: error })
+    }
+})
+
+
+/// delete many 
+router.delete("/deleteMany", async (req, res) => {
+    try {
+        let check = await userModel.deleteMany({
+      fullName: "Suhail",
+    });
+        console.log(`check `);
+        res.status(200).json({ msg: check })
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ msg: error })
+    }
+})
+
+// drop collection 
+
+
+router.delete("/dropcollection", async (req, res) => {
+    try {
+         let check = await userModel.collection.drop();
+        console.log(`check `);
+        res.status(200).json({ msg: check })
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ msg: error })
+    }
+})
+
+
+
 
 
 
